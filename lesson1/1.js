@@ -15,3 +15,31 @@
 вывода их в консоль в формате:
 "Название альбома - Исполнитель (Год выпуска)"
 */
+
+let musicCollection = {
+  albums: [{
+    title: "Акустический альбом",
+    artist: "Киш",
+    year: "1999г"
+  },
+  {
+    title: "ЧЕРЕЗ ВСЕ ВРЕМЕНА",
+    artist: "Ария",
+    year: "2014г"
+  },
+  {
+    title: "Кащей Бессмертный",
+    artist: "Сектор Газа",
+    year: "1994г"
+  }],
+  *[Symbol.iterator]() {
+    for (const el of this.albums) {
+      yield el;
+    }
+  }
+
+}
+
+for (const el of musicCollection) {
+  console.log(`${el.title} - ${el.artist} (${el.year})`);
+}

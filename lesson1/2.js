@@ -33,9 +33,40 @@ class Client {
   }
 }
 
+const chefs = new Map();
+chefs.set("Пицца", "Олег");
+chefs.set("Суши", "Андрей");
+chefs.set("Десерт", "Анна");
+
+const dishes = new Map();
+dishes.set("Маргарита", true);
+dishes.set("Пепперони", true);
+dishes.set("Три сыра", true);
+dishes.set("Филадельфия", true);
+dishes.set("Калифорния", true);
+dishes.set("Чизмаки", true);
+dishes.set("Сеякемаки", true);
+dishes.set("Тирамису", true);
+dishes.set("Чизкейк", true);
+
+
 // Вам необходимо реализовать класс, который управляет заказами и поварами.
 class Manager {
-
+  newOrder(client, ...orders) {
+    let toggle = true;
+    for (const el of [...orders]) {
+      if (!dishes.get(el.name)) {
+        toggle = false;
+        console.log(`${el.type} "${el.name}" - такого блюда не существует.`);
+      }
+    }
+    if (toggle) {
+      console.log(`Клиент ${client.firstname} заказал:`);
+      for (let order of [...orders]) {
+        console.log(`${order.type} "${order.name}" - ${order.quantity}; готовит повар ${chefs.get(order.type)}`);
+      }
+    }
+  }
 }
 
 // Можно передать внутрь конструктора что-либо, если необходимо.
@@ -43,7 +74,7 @@ const manager = new Manager();
 
 // Вызовы ниже должны работать верно, менять их нельзя, удалять тоже.
 manager.newOrder(
-  new Client("Иван", "Иванов"), 
+  new Client("Иван", "Иванов"),
   { name: "Маргарита", quantity: 1, type: "Пицца" },
   { name: "Пепперони", quantity: 2, type: "Пицца" },
   { name: "Чизкейк", quantity: 1, type: "Десерт" },
@@ -58,7 +89,7 @@ manager.newOrder(
 
 const clientPavel = new Client("Павел", "Павлов");
 manager.newOrder(
-  clientPavel, 
+  clientPavel,
   { name: "Филадельфия", quantity: 5, type: "Суши" },
   { name: "Калифорния", quantity: 3, type: "Суши" },
 );
@@ -68,7 +99,7 @@ manager.newOrder(
 // Суши "Калифорния" - 3; готовит повар Андрей
 
 manager.newOrder(
-  clientPavel, 
+  clientPavel,
   { name: "Калифорния", quantity: 1, type: "Суши" },
   { name: "Тирамису", quantity: 2, type: "Десерт" },
 );
@@ -79,7 +110,7 @@ manager.newOrder(
 // Десерт "Тирамису" - 2; готовит повар Анна
 
 manager.newOrder(
-  clientPavel, 
+  clientPavel,
   { name: "Филадельфия", quantity: 1, type: "Суши" },
   { name: "Трубочка с вареной сгущенкой", quantity: 1, type: "Десерт" },
 );
